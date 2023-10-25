@@ -12,5 +12,5 @@ class Pacientes {
     var nombrepaciente: String? = null
     var edadpaciente: String? = null
     @Column (name="doctores_id")
-    var doctoresId: String? = null
+    var doctoresId: Long? = null
 }

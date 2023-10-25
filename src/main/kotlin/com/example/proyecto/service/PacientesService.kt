@@ -13,16 +13,19 @@ import org.springframework.web.server.ResponseStatusException
 class PacientesService {
     @Autowired
     lateinit var pacientesRepository: PacientesRepository
-
+    @Autowired
+    lateinit var doctoresRepository: DoctoresRepository
     fun list ():List<Pacientes>{
         return pacientesRepository.findAll()
     }
     fun save(pacientes: Pacientes): Pacientes {
-        try{
+        try {
+            doctoresRepository.findById(pacientes.doctoresId)
+                ?: throw Exception("Id del cliente no encontrada")
             return pacientesRepository.save(pacientes)
-        }
-        catch (ex:Exception){
-            throw ResponseStatusException(HttpStatus.NOT_FOUND,ex.message)
+        }catch (ex : Exception){
+            throw ResponseStatusException(
+                HttpStatus.NOT_FOUND, ex.message, ex)
         }
     }
     fun update(pacientes: Pacientes): Pacientes {
