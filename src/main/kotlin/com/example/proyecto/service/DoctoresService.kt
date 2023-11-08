@@ -20,12 +20,21 @@ class DoctoresService {
     }
     fun save(doctores: Doctores): Doctores {
         try{
+            doctores.nombredoc?.takeIf { it.trim().isNotEmpty() }
+                ?: throw Exception("Nombre no debe ser vacio")
+
+            doctores.especialidaddoc?.takeIf { it.trim().isNotEmpty() }
+                ?: throw Exception("Especialidad no debe ser vacio")
+
+            doctores.telefonodoc?.takeIf { it.trim().isNotEmpty() }
+                ?: throw Exception("Telefono no debe ser vacio")
+
             return doctoresRepository.save(doctores)
         }
         catch (ex:Exception){
-            throw ResponseStatusException(HttpStatus.NOT_FOUND,ex.message)
+            throw ResponseStatusException(HttpStatus.BAD_REQUEST,ex.message)
         }
-}
+    }
     fun update(doctores: Doctores): Doctores{
         try {
             doctoresRepository.findById(doctores.id)
@@ -64,4 +73,5 @@ class DoctoresService {
             throw ResponseStatusException(HttpStatus.NOT_FOUND,ex.message)
         }
     }
+
 }

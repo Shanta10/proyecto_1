@@ -10,7 +10,7 @@ class Pacientes {
     @Column(updatable = false)
     var id: Long? = null
     var nombrepaciente: String? = null
-    var edadpaciente: String? = null
+    var edadpaciente: Int? = null
     @Column (name="doctores_id")
     var doctoresId: Long? = null
 }
